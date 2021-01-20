@@ -1,11 +1,12 @@
 import sys
 import smtplib
 import ssl
-import pandas as pd
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from datetime import datetime
+
+import pandas as pd
 
 
 # get arguments
@@ -32,13 +33,15 @@ dic = {'Marcel':0, 'Felix':0, 'Flo':0}
 for key in dic.keys():
     dic[key] = df.iloc[(df['name'] == key).values,2].sum()
 
-body = 'Guten Morgen!\nAktuell verteilen sich die {:.2f}€ in der Golfkasse wie folgt:\n'.format(round(sum(dic.values()), 2))
+body = 'Guten Morgen!\n\nAktuell verteilen sich die'
+body += ' {:.2f}€ in der Golfkasse wie folgt:\n'.format(
+    round(sum(dic.values()), 2))
+
 a = ''
 for key in dic.keys():
-    a += key + ': ' + '{:.2f}'.format(dic[key]) + '€\n'
-body += a + '\n\nMit freundlichen Grüßen\nGolfKassenOverview'
+    a += '    ' + key + ': ' + '{:.2f}'.format(dic[key]) + '€\n'
+body += a + '\nMit freundlichen Grüßen\nGolfKassenOverview'
 
-body = 'testmail'
 msg.attach(MIMEText(body, 'plain'))
 
 # send mail
