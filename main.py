@@ -21,11 +21,11 @@ port = 465
 context = ssl.create_default_context()
 
 # create message
-timestamp = datetime.now().strftime("%d-%b-%Y %H:%M:%S")
+datestamp = datetime.now().strftime("%d-%b-%Y")
 msg = MIMEMultipart()
 msg['From'] = sender_email
 msg['To'] = sender_email
-msg['Subject'] = 'Aktueller Stand Golfkasse ' + timestamp
+msg['Subject'] = datestamp + ': Aktueller Stand Golfkasse'
 
 # email text
 df = pd.read_csv('golfkasse.csv')
@@ -39,7 +39,7 @@ body += ' {:.2f}€ in der Golfkasse wie folgt:\n'.format(
 
 a = ''
 for key in dic.keys():
-    a += '    ' + key + ': ' + '{:.2f}'.format(dic[key]) + '€\n'
+    a += key + ': ' + '{:.2f}'.format(dic[key]) + '€\n'
 body += a + '\nMit freundlichen Grüßen\nGolfKassenOverview'
 
 msg.attach(MIMEText(body, 'plain'))
