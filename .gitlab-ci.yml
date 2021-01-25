@@ -3,5 +3,4 @@ image: python:latest
 deploy-prod:
   stage: deploy
   script:
-    - pip install pandas
     - python main.py $SENDER_EMAIL $SENDER_PASSWORD $RECEIVER_EMAIL_1 $RECEIVER_EMAIL_2 RECEIVER_EMAIL_3
